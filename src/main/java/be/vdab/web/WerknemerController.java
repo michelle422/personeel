@@ -13,6 +13,7 @@ import be.vdab.services.WerknemerService;
 @RequestMapping("/werknemers")
 class WerknemerController {
 	private static final String WERKNEMER_VIEW = "werknemers/werknemer";
+	private static final String OPSLAG_VIEW = "werknemers/opslag"; 
 	private final WerknemerService werknemerService;
 	
 	WerknemerController(WerknemerService werknemerService) {
@@ -23,6 +24,8 @@ class WerknemerController {
 	ModelAndView findByChefidIsNull(@PathVariable Werknemer werknemer) {
 		ModelAndView modelAndView = new ModelAndView(WERKNEMER_VIEW, "werknemer", 
 				werknemerService.findByChefidIsNull());
+		modelAndView.addObject("jobtitel", werknemerService.findJobtitel(werknemer.getId()))
+					.addObject("ondergeschikten", werknemerService.findOndergeschikten(werknemer.getId()));
 		return modelAndView;
 	}
 }

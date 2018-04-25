@@ -17,9 +17,19 @@
 		<dd>${werknemer.email}</dd>
 		<dt>Salaris</dt>
 		<dd>&euro; <spring:eval expression="werknemer.salaris"/></dd>
+		<dt>Jobtitel</dt>
+		<dd>${jobtitel}</dd>
+		
+		<dt>Ondergeschikten</dt>
+		<c:forEach items="${ondergeschikten}" var="ondergeschikt">
+			<spring:url var="url" value="/werknemer/{id}">
+				<spring:param name="id" value="${ondergeschikt.id}"/>
+			</spring:url>
+			<dd><a href="${url}">${ondergeschikt}</a></dd>
+		</c:forEach>
 		<dt>Foto</dt>
-		<img alt='${werknemer.voornaam + " " + werknemer.familienaam}' 
-			src="<c:url value='/images/${werknemer.id}.jpg'/>" class="fullwidth">
 	</dl>
+	<img alt='${werknemer.voornaam + " " + werknemer.familienaam}' 
+			src="<c:url value='/images/${werknemer.id}.jpg'/>">
 </body>
 </html>
