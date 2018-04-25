@@ -1,0 +1,20 @@
+.zonderbolletjes {
+	list-style: none;
+	margin-bottom: 0.2em;
+	padding: 0;
+}
+
+dt {
+	clear:left;
+	float: left;
+	width: 15em;
+}
+
+dd {
+	margin-left: 15em;
+	font-weight: bold;
+}
+
+.fullwidth {
+	width: 100%;
+}
