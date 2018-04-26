@@ -9,7 +9,7 @@
 	<h1>Menu</h1>
 	<nav>
 		<ul>
-			<li><a href='<c:url value="/werknemers"/>'>Werknemershiërarchie</a></li>
+			<li><a href='<c:url value="/werknemer"/>'>Werknemershiërarchie</a></li>
 			<li><a href='<c:url value="/jobtitels"/>'>Jobtitels</a></li>
 		</ul>
 	</nav>

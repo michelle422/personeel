@@ -4,13 +4,13 @@
 <!doctype html>
 <html lang="nl">
 <head>
-<title>Werknemer ${werknemer.voornaam + " " + werknemer.familienaam}</title>
+<title>Werknemer ${werknemer.getNaam()}</title>
 </head>
 <body>
-	<h1>Werknemer ${werknemer.voornaam + " " + werknemer.familienaam}</h1>
+	<h1>Werknemer ${werknemer.getNaam()}</h1>
 	<dl>
 		<dt>Voornaam</dt>
-		<dd>>${werknemer.voornaam}</dd>
+		<dd>${werknemer.voornaam}</dd>
 		<dt>Familienaam</dt>
 		<dd>${werknemer.familienaam}</dd>
 		<dt>Email adres</dt>
@@ -18,18 +18,28 @@
 		<dt>Salaris</dt>
 		<dd>&euro; <spring:eval expression="werknemer.salaris"/></dd>
 		<dt>Jobtitel</dt>
-		<dd>${jobtitel}</dd>
-		
-		<dt>Ondergeschikten</dt>
-		<c:forEach items="${ondergeschikten}" var="ondergeschikt">
+		<dd>${werknemer.jobtitel.naam}</dd>
+		<c:if test="${not empty werknemer.chef }">
+			<dt>Chef</dt>
 			<spring:url var="url" value="/werknemer/{id}">
-				<spring:param name="id" value="${ondergeschikt.id}"/>
+				<spring:param name="id" value="${werknemer.chef.id}"/>
 			</spring:url>
-			<dd><a href="${url}">${ondergeschikt}</a></dd>
-		</c:forEach>
+			<dd><a href="${url}">${werknemer.chef.getNaam()}</a></dd>
+		</c:if>
+		<c:if test="${not empty werknemer.ondergeschikten}">
+			<dt>Ondergeschikten</dt>
+			<c:forEach items="${werknemer.ondergeschikten}" var="ondergeschikt">
+				<spring:url var="url" value="/werknemer/{id}">
+					<spring:param name="id" value="${ondergeschikt.id}"/>
+				</spring:url>
+				<dd><a href="${url}">${ondergeschikt.getNaam()}</a></dd>
+			</c:forEach>
+		</c:if>
 		<dt>Foto</dt>
 	</dl>
-	<img alt='${werknemer.voornaam + " " + werknemer.familienaam}' 
+	<img alt='${werknemer.voornaam} ${werknemer.familienaam}' 
 			src="<c:url value='/images/${werknemer.id}.jpg'/>">
+	<spring:url var="" value="">
+	</spring:url>
 </body>
 </html>

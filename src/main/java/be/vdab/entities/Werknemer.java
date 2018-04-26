@@ -7,11 +7,14 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
@@ -24,6 +27,8 @@ import org.springframework.format.annotation.NumberFormat.Style;
 
 @Entity
 @Table(name = "werknemers")
+@NamedEntityGraph(name = "Werknemer.metJobtitel", 
+		attributeNodes = @NamedAttributeNode("jobtitel"))
 public class Werknemer implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -32,21 +37,29 @@ public class Werknemer implements Serializable {
 	private String voornaam;
 	private String familienaam;
 	private String email;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "chefid")
 	private Werknemer chef;
 	@OneToMany(mappedBy = "chef")
 	private Set<Werknemer> ondergeschikten;
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "jobtitelid")
 	private Jobtitel jobtitel;
 	@NumberFormat(style = Style.NUMBER)
 	@NotNull
-	@Min(0)
+	@Min(1)
 	@Digits(integer = 10, fraction = 2)
 	private BigDecimal salaris;
 	@Version
 	private long versie;
+	
+	public Werknemer() {
+	}
+	
+	public Werknemer(long id, String voornaam, String familienaam, String email, BigDecimal salaris) {
+		this(voornaam, familienaam, email, salaris);
+		this.id = id;
+	}
 	
 	public Werknemer(String voornaam, String familienaam, String email, 
 			BigDecimal salaris) {
@@ -56,14 +69,6 @@ public class Werknemer implements Serializable {
 		this.salaris = salaris;
 	}
 	
-	public Werknemer(long id, String voornaam, String familienaam, String email, BigDecimal salaris) {
-		this(voornaam, familienaam, email, salaris);
-		this.id = id;
-	}
-
-	public Werknemer() {
-	}
-
 	public long getId() {
 		return id;
 	}
