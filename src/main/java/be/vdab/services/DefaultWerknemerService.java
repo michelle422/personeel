@@ -1,5 +1,6 @@
 package be.vdab.services;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import be.vdab.repositories.WerknemerRepository;
 class DefaultWerknemerService implements WerknemerService {
 	private final WerknemerRepository werknemerRepository;
 
-	public DefaultWerknemerService(WerknemerRepository werknemerRepository) {
+	DefaultWerknemerService(WerknemerRepository werknemerRepository) {
 		this.werknemerRepository = werknemerRepository;
 	}
 
@@ -28,8 +29,8 @@ class DefaultWerknemerService implements WerknemerService {
 	
 	@Override
 	@ModifyingTransactionalServiceMethod
-	public void update(Werknemer werknemer) {
-		werknemerRepository.save(werknemer);	
+	public void updateSalaris(Long id, BigDecimal salaris) {
+		werknemerRepository.updateSalaris(id, salaris);	
 	}
 	
 }

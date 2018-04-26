@@ -9,4 +9,11 @@
 				where w.chef is null
 			</query>
 		</named-query>
+		<named-query name="Werknemer.updateSalaris">
+			<query>
+				update Werknemer w
+				set w.salaris = :salaris
+				where w.id = :id
+			</query>
+		</named-query>
 </entity-mappings>

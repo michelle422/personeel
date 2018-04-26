@@ -39,7 +39,11 @@
 	</dl>
 	<img alt='${werknemer.voornaam} ${werknemer.familienaam}' 
 			src="<c:url value='/images/${werknemer.id}.jpg'/>">
-	<spring:url var="" value="">
+	<spring:url value="/werknemer/{id}/opslag" var="opslagURL">
+		<spring:param name="id" value="${werknemer.id}"/>
 	</spring:url>
+	<form action="${opslagURL}">
+		<input type="submit" value="Opslag">
+	</form>
 </body>
 </html>

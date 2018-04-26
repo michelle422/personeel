@@ -1,5 +1,7 @@
 package be.vdab.web;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.http.MediaType;
@@ -47,21 +49,22 @@ class WerknemerController {
 		return modelAndView;
 	}
 	
-	@GetMapping("{werknemer}/opslag")
-	ModelAndView updateForm(@PathVariable Werknemer werknemer) {
-		if (werknemer == null) {
+	@GetMapping("{id}/opslag")
+	ModelAndView updateForm(@PathVariable Long id) {
+		Optional<Werknemer> optionalWerknemer = werknemerService.read(id);
+		if (! optionalWerknemer.isPresent()) {
 			return new ModelAndView(REDIRECT_URL_WERKNEMER_NIET_GEVONDEN);
 		}
-		return new ModelAndView(OPSLAG_VIEW).addObject(werknemer);
+		return new ModelAndView(OPSLAG_VIEW).addObject(optionalWerknemer.get());
 	}
 	
-	@PostMapping("{id}/opslag")
+	@PostMapping(params = {"id", "salaris"})
 	String update(@Valid Werknemer werknemer, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return OPSLAG_VIEW;
 		}
 		try {
-			werknemerService.update(werknemer);
+			werknemerService.updateSalaris(werknemer.getSalaris());
 			return REDIRECT_URL_NA_OPSLAG;
 		} catch (ObjectOptimisticLockingFailureException ex) {
 			return REDIRECT_URL_NA_LOCKING_EXCEPTION; 

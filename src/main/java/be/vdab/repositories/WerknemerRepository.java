@@ -1,5 +1,7 @@
 package be.vdab.repositories;
 
+import java.math.BigDecimal;
+
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,5 +16,5 @@ public interface WerknemerRepository extends JpaRepository<Werknemer, Long> {
 	@EntityGraph("Werknemer.metJobtitel")
 	Werknemer findOne(Long id);
 
-	//void update(Werknemer werknemer);
+	void updateSalaris(Long id, BigDecimal salaris);
 }
