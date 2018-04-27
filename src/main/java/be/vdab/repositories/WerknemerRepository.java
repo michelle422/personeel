@@ -1,10 +1,11 @@
 package be.vdab.repositories;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import be.vdab.entities.Jobtitel;
 import be.vdab.entities.Werknemer;
 
 public interface WerknemerRepository extends JpaRepository<Werknemer, Long> {
@@ -15,6 +16,7 @@ public interface WerknemerRepository extends JpaRepository<Werknemer, Long> {
 	@Override
 	@EntityGraph("Werknemer.metJobtitel")
 	Werknemer findOne(Long id);
-
-	void updateSalaris(Long id, BigDecimal salaris);
+	
+	@EntityGraph("Werknemer.metJobtitel")
+	List<Werknemer> findWerknemersByJobtitel(Jobtitel jobtitel);
 }

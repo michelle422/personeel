@@ -53,6 +53,29 @@ label span:empty, .fout:empty {
 	padding: 0;
 }
 
+.zonderbolletjes li {
+	display: inline;
+	margin-right: 0.2em;
+}
+
+.fullwidth {
+	width: 100%;
+}
+
+.knop {
+	text-decoration: none;
+}
+
+@media print {
+	nav {
+		display: none;
+	}
+}
+
+a {
+	color: black;
+}
+
 dt {
 	clear:left;
 	float: left;
@@ -64,6 +87,29 @@ dd {
 	font-weight: bold;
 }
 
-.fullwidth {
-	width: 100%;
+blockquote {
+	margin-left: 0;
+	font-style: italic;
+}
+
+
+#logoutform {
+	display: inline;
+}
+
+@media ( min-width :40em) {
+	.pagineren a {
+		font-weight: bold;
+		color: white;
+		background-color: green;
+		border-bottom-right-radius: 0.5em;
+		border-top-left-radius: 0.5em;
+		border-top-right-radius: 0.5em;
+		padding: 0.4em;
+		text-decoration: none;
+	}
+}
+
+.pagineren a:hover {
+	text-decoration: underline;
 }

@@ -1,11 +1,8 @@
 package be.vdab.web;
 
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.http.MediaType;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -24,10 +21,7 @@ import be.vdab.services.WerknemerService;
 class WerknemerController {
 	private static final String WERKNEMER_VIEW = "werknemers/werknemer";
 	private static final String OPSLAG_VIEW = "werknemers/opslag"; 
-	private static final String REDIRECT_URL_WERKNEMER_NIET_GEVONDEN = "redirect:/werknemer";
-	private static final String REDIRECT_URL_NA_OPSLAG = "redirect:/werknemer";
-	private static final String REDIRECT_URL_NA_LOCKING_EXCEPTION = 
-			"redirect:/werknemer/{id}?optimisticlockingexception=true"; 
+	private static final String REDIRECT_URL_NA_OPSLAG = "redirect:/";
 	private final WerknemerService werknemerService;
 	
 	WerknemerController(WerknemerService werknemerService) {
@@ -41,34 +35,29 @@ class WerknemerController {
 		return modelAndView;
 	}
 	
-	@GetMapping("{id}")
-	ModelAndView read(@PathVariable Long id) {
-		ModelAndView modelAndView = new ModelAndView(WERKNEMER_VIEW);
-		werknemerService.read(id)
-			.ifPresent(werknemer -> modelAndView.addObject(werknemer));
+	@GetMapping("{werknemer}")
+	ModelAndView read(@PathVariable Werknemer werknemer) {
+		ModelAndView modelAndView = new ModelAndView(WERKNEMER_VIEW); 
+		if (werknemer != null) {
+			modelAndView.addObject(werknemer);
+		}
 		return modelAndView;
 	}
 	
-	@GetMapping("{id}/opslag")
-	ModelAndView updateForm(@PathVariable Long id) {
-		Optional<Werknemer> optionalWerknemer = werknemerService.read(id);
-		if (! optionalWerknemer.isPresent()) {
-			return new ModelAndView(REDIRECT_URL_WERKNEMER_NIET_GEVONDEN);
-		}
-		return new ModelAndView(OPSLAG_VIEW).addObject(optionalWerknemer.get());
+	@GetMapping("/{werknemer}/opslag")
+	ModelAndView opslag(@PathVariable Werknemer werknemer) {
+		ModelAndView modelAndView = new ModelAndView(OPSLAG_VIEW);
+		modelAndView.addObject(new OpslagForm());
+		return modelAndView;
 	}
 	
-	@PostMapping(params = {"id", "salaris"})
-	String update(@Valid Werknemer werknemer, BindingResult bindingResult) {
+	@PostMapping("{werknemer}/opslag")
+	ModelAndView opslag(@PathVariable Werknemer werknemer, @Valid OpslagForm opslagForm, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return OPSLAG_VIEW;
+			return new ModelAndView(OPSLAG_VIEW);
 		}
-		try {
-			werknemerService.updateSalaris(werknemer.getSalaris());
-			return REDIRECT_URL_NA_OPSLAG;
-		} catch (ObjectOptimisticLockingFailureException ex) {
-			return REDIRECT_URL_NA_LOCKING_EXCEPTION; 
-		}
+		werknemerService.opslag(werknemer, opslagForm.getBedrag());
+		return new ModelAndView(REDIRECT_URL_NA_OPSLAG);
 	}
 	
 	@InitBinder("werknemer")

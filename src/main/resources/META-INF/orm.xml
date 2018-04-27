@@ -16,4 +16,5 @@
 				where w.id = :id
 			</query>
 		</named-query>
+<!-- 		<named-query name="Werknemer.findBy"></named-query> -->
 </entity-mappings>

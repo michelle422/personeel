@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import be.vdab.entities.Jobtitel;
-import be.vdab.entities.Werknemer;
 import be.vdab.repositories.JobtitelRepository;
 
 @Service
@@ -16,11 +15,6 @@ class DefaultJobtitelService implements JobtitelService {
 	
 	DefaultJobtitelService(JobtitelRepository jobtitelRepository) {
 		this.jobtitelRepository = jobtitelRepository;
-	}
-
-	@Override
-	public List<Werknemer> findWerknemersByJobtitel() {
-		return jobtitelRepository.findWerknemersByJobtitel();
 	}
 
 	@Override

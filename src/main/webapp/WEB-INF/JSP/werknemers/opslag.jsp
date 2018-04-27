@@ -5,10 +5,13 @@
 <!doctype html>
 <html lang="nl">
 <head>
-<title>Opslag voor ${werknemer.getNaam()}</title>
+<link rel='icon' href='<c:url value="/images/favicon.ico"/>'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<link rel='stylesheet' href='<c:url value="/styles/default.css"/>'>
+<title>Opslag voor ${werknemer.voornaam} ${werknemer.familienaam}</title>
 </head>
 <body>
-	<h1>Opslag voor ${werknemer.getNaam()}</h1>
+	<h1>Opslag voor ${werknemer.voornaam} ${werknemer.familienaam}</h1>
 	<dl>
 		<dt>Huidige salaris</dt>
 		<dd>&euro; <spring:eval expression="werknemer.salaris"/></dd>
@@ -16,15 +19,10 @@
 	<spring:url value="/werknemer/{id}/opslag" var="opslagURL">
 		<spring:param name="id" value="${werknemer.id}"/>
 	</spring:url>
-	<form:form method="post" action="${opslagURL}" commandName="werknemer" id="opslagform">
-		<form:label path="salaris">Bedrag<form:errors path="salaris"/></form:label><br>
-		<form:input path="salaris" autofocus="autofocus" required="required"/><br>
-		<input type="submit" value="Opslag" id="submitknop">
-		<script>
-			document.getElementById('opslagform').onsubmit=function() {
-				document.getElementById('submitknop').disabled = true;
-			};
-		</script>
+	<form:form commandName="opslagForm">
+		<form:label path="bedrag">Bedrag<form:errors path="bedrag"/></form:label><br>
+		<form:input path="bedrag" autofocus="autofocus" required="required"/><br>
+		<input type="submit" value="Opslag">
 	</form:form>
 </body>
 </html>

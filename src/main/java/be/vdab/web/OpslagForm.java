@@ -8,14 +8,14 @@ import javax.validation.constraints.NotNull;
 class OpslagForm {
 	@NotNull
 	@Min(1)
-	private BigDecimal salaris;
+	private BigDecimal bedrag;
 
-	public BigDecimal getSalaris() {
-		return salaris;
+	public BigDecimal getBedrag() {
+		return bedrag;
 	}
 
-	public void setSalaris(BigDecimal salaris) {
-		this.salaris = salaris;
+	public void setBedrag(BigDecimal bedrag) {
+		this.bedrag = bedrag;
 	}
 	
 }

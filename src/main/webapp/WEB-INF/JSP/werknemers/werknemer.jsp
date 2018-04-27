@@ -4,6 +4,9 @@
 <!doctype html>
 <html lang="nl">
 <head>
+<link rel='icon' href='<c:url value="/images/favicon.ico"/>'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<link rel='stylesheet' href='<c:url value="/styles/default.css"/>'>
 <title>Werknemer ${werknemer.getNaam()}</title>
 </head>
 <body>

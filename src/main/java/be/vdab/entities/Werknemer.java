@@ -133,4 +133,7 @@ public class Werknemer implements Serializable {
 		return Collections.unmodifiableSet(ondergeschikten);
 	}
 
+	public void opslag(BigDecimal bedrag) {
+		this.salaris = this.salaris.add(bedrag);
+	}
 }
